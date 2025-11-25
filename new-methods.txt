@@ -1,0 +1,160 @@
+                
+                this.log('🚀 广告点击监控系统启动（极简版）');
+                this.init();
+            }
+            
+            log(...args) {
+                if (CONFIG.debugMode) console.log('[AdClick]', ...args);
+            }
+            
+            init() {
+                this.checkAds();
+                this.setupLeaveDetection();
+                this.log('💡 策略：用户离开页面时记录为可能的广告点击');
+            }
+            
+            checkAds() {
+                const checkInterval = setInterval(() => {
+                    const ads = document.querySelectorAll('.adsbygoogle iframe[id^="aswift_"]');
+                    
+                    if (ads.length > 0) {
+                        this.hasAds = true;
+                        this.log(`✅ 找到 ${ads.length} 个广告`);
+                        clearInterval(checkInterval);
+                    }
+                }, 500);
+                
+                setTimeout(() => clearInterval(checkInterval), 10000);
+            }
+            
+            setupLeaveDetection() {
+                window.addEventListener('blur', () => {
+                    this.log('👁️ 窗口失去焦点');
+                    this.onPageLeave('blur');
+                });
+                
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) {
+                        this.log('🚪 页面隐藏');
+                        this.onPageLeave('visibility');
+                    }
+                });
+                
+                window.addEventListener('pagehide', () => {
+                    this.log('📤 页面卸载');
+                    this.onPageLeave('pagehide');
+                });
+                
+                this.log('✓ 监听器已设置');
+            }
+            
+            onPageLeave(trigger) {
+                if (!this.hasAds) return;
+                
+                const now = Date.now();
+                const lastReport = parseInt(localStorage.getItem(CONFIG.lastReportKey) || '0');
+                
+                if (now - lastReport < CONFIG.cooldownPeriod) {
+                    this.log(`⏭️ 距上次上报不足${CONFIG.cooldownPeriod/1000}秒`);
+                    return;
+                }
+                
+                if (this.reported) {
+                    this.log('⏭️ 本次已上报');
+                    return;
+                }
+                
+                this.log('═'.repeat(50));
+                this.log('🎯 检测到页面离开，记录广告点击');
+                this.log('   触发:', trigger);
+                
+                this.reported = true;
+                localStorage.setItem(CONFIG.lastReportKey, now.toString());
+                
+                this.reportClick(trigger);
+                
+                this.log('✅ 已上报');
+                this.log('═'.repeat(50));
+            }
+            
+            reportClick(trigger) {
+                const totalClicks = this.incrementClicks();
+                const stayDuration = Math.round((Date.now() - this.pageLoadTime) / 1000);
+                
+                const firstAd = document.querySelector('.adsbygoogle');
+                const adSlot = firstAd ? firstAd.getAttribute('data-ad-slot') : 'unknown';
+                
+                const data = {
+                    timestamp: new Date().toISOString(),
+                    eventType: 'ad_click',
+                    novel: '{{ novel.title }}',
+                    chapter: '{{ chapter.number }}',
+                    pageUrl: window.location.href,
+                    adSlot: adSlot,
+                    scrollDepth: Math.round(window.scrollY),
+                    userIP: '',
+                    userAgent: navigator.userAgent,
+                    screenSize: `${window.screen.width}x${window.screen.height}`,
+                    viewportSize: `${window.innerWidth}x${window.innerHeight}`,
+                    stayDuration: stayDuration,
+                    totalClickCount: totalClicks,
+                    clickSource: trigger + '_simple',
+                    referrer: document.referrer
+                };
+                
+                this.sendData(data);
+            }
+            
+            async sendData(data) {
+                try {
+                    if (typeof getUserIP === 'function') {
+                        data.userIP = await getUserIP();
+                    } else {
+                        try {
+                            const res = await fetch('https://api.ipify.org?format=json');
+                            const json = await res.json();
+                            data.userIP = json.ip;
+                        } catch (e) {
+                            data.userIP = 'Unknown';
+                        }
+                    }
+                    
+                    const payload = JSON.stringify(data);
+                    
+                    if (navigator.sendBeacon) {
+                        const blob = new Blob([payload], {type: 'application/json'});
+                        navigator.sendBeacon(CONFIG.scriptUrl, blob);
+                        this.log('📡 sendBeacon 发送');
+                    } else {
+                        fetch(CONFIG.scriptUrl, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: {'Content-Type': 'application/json'},
+                            body: payload,
+                            keepalive: true
+                        });
+                        this.log('📡 fetch 发送');
+                    }
+                    
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'ad_click', {
+                            ad_slot: data.adSlot,
+                            total_clicks: data.totalClickCount
+                        });
+                    }
+                    
+                } catch (error) {
+                    this.log('❌ 发送失败:', error);
+                }
+            }
+            
+            incrementClicks() {
+                try {
+                    let total = parseInt(localStorage.getItem(CONFIG.storageKey) || '0');
+                    total++;
+                    localStorage.setItem(CONFIG.storageKey, total.toString());
+                    return total;
+                } catch (e) {
+                    return 0;
+                }
+            }

@@ -1,28 +1,31 @@
+head标签
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8782251874113390"
+     crossorigin="anonymous"></script>
 
 
 第1段
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6699125004636440"
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8782251874113390"
      crossorigin="anonymous"></script>
 <ins class="adsbygoogle"
      style="display:block; text-align:center;"
      data-ad-layout="in-article"
      data-ad-format="fluid"
-     data-ad-client="ca-pub-6699125004636440"
-     data-ad-slot="8947754058"></ins>
+     data-ad-client="ca-pub-8782251874113390"
+     data-ad-slot="2912660874"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
 
 第2段
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6699125004636440"
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8782251874113390"
      crossorigin="anonymous"></script>
 <ins class="adsbygoogle"
      style="display:block; text-align:center;"
      data-ad-layout="in-article"
      data-ad-format="fluid"
-     data-ad-client="ca-pub-6699125004636440"
-     data-ad-slot="4761097035"></ins>
+     data-ad-client="ca-pub-8782251874113390"
+     data-ad-slot="1601123794"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
@@ -30,14 +33,14 @@
 
 
 第3段
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6699125004636440"
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8782251874113390"
      crossorigin="anonymous"></script>
 <ins class="adsbygoogle"
      style="display:block; text-align:center;"
      data-ad-layout="in-article"
      data-ad-format="fluid"
-     data-ad-client="ca-pub-6699125004636440"
-     data-ad-slot="2018549474"></ins>
+     data-ad-client="ca-pub-8782251874113390"
+     data-ad-slot="7249978241"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
@@ -45,14 +48,15 @@
 
 
 第4段
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6699125004636440"
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8782251874113390"
      crossorigin="anonymous"></script>
 <ins class="adsbygoogle"
      style="display:block; text-align:center;"
      data-ad-layout="in-article"
      data-ad-format="fluid"
-     data-ad-client="ca-pub-6699125004636440"
-     data-ad-slot="3870687194"></ins>
+     data-ad-client="ca-pub-8782251874113390"
+     data-ad-slot="3433080214"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
@@ -60,6 +64,7 @@
 
 
 
-head标签
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6699125004636440"
-     crossorigin="anonymous"></script>
+
+
+
+

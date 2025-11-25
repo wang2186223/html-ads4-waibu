@@ -46,7 +46,7 @@ class WebsiteBuilder:
             str(self.output_path)
         )
         
-        self.site_url = config.get('site_url', 'https://novel.nougmi.xyz')
+        self.site_url = config.get('site_url', 'https://example.github.io')
         
     def get_file_timestamps(self, file_path: Path) -> Dict[str, str]:
         """获取文件的创建时间和修改时间"""
@@ -560,7 +560,7 @@ def main():
     args = parser.parse_args()
     
     # 读取配置文件
-    site_url = 'https://novel.nougmi.xyz'  # 默认正确域名
+    site_url = 'https://novel.fkens.top'  # 默认正确域名
     config_file = 'config.json'
     if os.path.exists(config_file):
         try:
